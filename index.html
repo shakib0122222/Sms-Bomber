@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAKIB SMS BOMBER - Subscription</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+        :root {
+            --primary-color: #6a0dad; /* Purple for main elements */
+            --secondary-color: #ff007f; /* Pink for accents/stop button */
+            --background-color: #f0f2f5;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --light-text-color: #666666;
+            --border-color: #e0e0e0;
+            --success-color: #28a745;
+            --error-color: #dc3545;
+            --info-color: #007bff;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            box-sizing: border-box;
+            line-height: 1.6;
+        }
+
+        .container {
+            background-color: var(--card-background);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        .header-subtitle {
+            font-size: 13px;
+            color: var(--light-text-color);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+
+        input[type="text"], input[type="number"], input[type="password"] {
+            width: calc(100% - 24px);
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 15px;
+            color: var(--text-color);
+            background-color: #fdfdfd;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus, input[type="password"]:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(106, 13, 173, 0.2);
+            outline: none;
+        }
+
+        .input-with-label {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: #fdfdfd;
+            padding: 0 10px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .input-with-label:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(106, 13, 173, 0.2);
+        }
+        .input-with-label img {
+            width: 18px;
+            height: auto;
+            margin-right: 8px;
+        }
+        .input-with-label input {
+            flex-grow: 1;
+            border: none;
+            padding: 10px 0;
+            background: transparent;
+        }
+        .input-with-label input:focus {
+            box-shadow: none;
+        }
+
+        .slider-group {
+            margin-bottom: 20px;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .slider-value {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 16px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 7px;
+            background: var(--border-color);
+            border-radius: 5px;
+            outline: none;
+            opacity: 0.9;
+            transition: opacity 0.2s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: grab;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: grab;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+
+        button:not([disabled])#startButton {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 15px rgba(106, 13, 173, 0.3);
+        }
+
+        button:not([disabled])#startButton:hover {
+            background-color: #5a0ca0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(106, 13, 173, 0.4);
+        }
+
+        button:not([disabled])#stopButton {
+            background-color: var(--secondary-color);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.3);
+        }
+
+        button:not([disabled])#stopButton:hover {
+            background-color: #cc0066;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 0, 127, 0.4);
+        }
+
+        button:disabled {
+            background-color: #e0e0e0;
+            color: #a0a0a0;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+        
+        .activity-log {
+            margin-top: 25px;
+            text-align: left;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: #fdfdfd;
+            padding: 12px;
+            max-height: 180px;
+            overflow-y: auto;
+            font-size: 13px;
+            color: var(--light-text-color);
+            white-space: pre-wrap;
+            word-break: break-all;
+            position: relative;
+        }
+
+        .activity-log h3 {
+            margin-top: 0;
+            color: var(--text-color);
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .log-entry {
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+
+        .log-success { color: var(--success-color); }
+        .log-error { color: var(--error-color); }
+        .log-info { color: var(--info-color); }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--primary-color);
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 13px;
+            color: var(--light-text-color);
+            margin-top: 5px;
+        }
+
+        .developer-info {
+            margin-top: 25px;
+            font-size: 12px;
+            color: var(--light-text-color);
+        }
+
+        .developer-info a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .developer-info a:hover {
+            text-decoration: underline;
+        }
+
+        .icon {
+            width: 16px;
+            height: 16px;
+            vertical-align: middle;
+            fill: currentColor;
+        }
+
+        .theme-settings {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-settings button {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            padding: 0;
+            cursor: pointer;
+            transition: border-color 0.2s ease;
+        }
+
+        .theme-settings button.active {
+            border-color: var(--primary-color);
+        }
+        #themePurple { background-color: #6a0dad; }
+        #themeBlue { background-color: #007bff; }
+        #themeGreen { background-color: #28a745; }
+        #themeRed { background-color: #dc3545; }
+
+        .auth-form-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .auth-form-buttons button {
+            flex: 1;
+            padding: 10px 15px;
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .auth-form-buttons button:hover {
+            background-color: #5a0ca0;
+        }
+
+        /* Media queries for larger screens */
+        @media (min-width: 600px) {
+            body { padding: 30px; align-items: center; }
+            .container { max-width: 450px; padding: 30px; margin-top: 20px; margin-bottom: 20px; }
+            .header-title { font-size: 28px; }
+            .header-subtitle { font-size: 14px; margin-bottom: 25px; }
+            .form-group { margin-bottom: 20px; }
+            label { font-size: 15px; }
+            input[type="text"], input[type="number"], input[type="password"] { padding: 12px; font-size: 16px; }
+            .input-with-label img { width: 20px; margin-right: 10px; }
+            .input-with-label input { padding: 12px 0; }
+            .slider-group { margin-bottom: 25px; }
+            .slider-label { font-size: 15px; }
+            .slider-value { font-size: 18px; }
+            input[type="range"] { height: 8px; }
+            input[type="range"]::-webkit-slider-thumb, input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; }
+            .action-buttons { gap: 15px; margin-top: 25px; }
+            button { padding: 14px 20px; font-size: 16px; gap: 8px; }
+            .activity-log { margin-top: 30px; padding: 15px; max-height: 200px; font-size: 14px; }
+            .activity-log h3 { font-size: 16px; margin-bottom: 10px; }
+            .log-entry { margin-bottom: 5px; }
+            .progress-bar-container { height: 10px; margin-top: 15px; }
+            .progress-text { font-size: 14px; }
+            .developer-info { margin-top: 30px; font-size: 13px; }
+            .icon { width: 18px; height: 18px; }
+            .theme-settings { top: 15px; right: 15px; gap: 10px; }
+            .theme-settings button { width: 30px; height: 30px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="theme-settings">
+            <button id="themePurple" data-primary="#6a0dad" data-secondary="#ff007f" class="active"></button>
+            <button id="themeBlue" data-primary="#007bff" data-secondary="#fd7e14"></button>
+            <button id="themeGreen" data-primary="#28a745" data-secondary="#ffc107"></button>
+            <button id="themeRed" data-primary="#dc3545" data-secondary="#6f42c1"></button>
+        </div>
+
+        <h1 class="header-title">SAKIB SMS BOMBER</h1>
+        <p class="header-subtitle">সামান্য মজা করুন!</p>
+
+        <!-- Authentication Section -->
+        <div id="authSection">
+            <h2>লগইন করুন</h2>
+            <p>একটি অ্যাকাউন্ট নেই? <a href="#" id="showRegister">রেজিস্টার করুন</a></p>
+            <div class="form-group">
+                <label for="username">ইউজারনেম</label>
+                <input type="text" id="username" placeholder="আপনার ইউজারনেম দিন">
+            </div>
+            <div class="form-group">
+                <label for="password">পাসওয়ার্ড</label>
+                <input type="password" id="password" placeholder="আপনার পাসওয়ার্ড দিন">
+            </div>
+            <div class="auth-form-buttons">
+                <button id="loginButton">লগইন</button>
+            </div>
+            <p id="authMessage" style="color: var(--error-color); margin-top: 15px; font-size: 14px;"></p>
+        </div>
+
+        <!-- Registration Section -->
+        <div id="registerSection" style="display: none;">
+            <h2>রেজিস্টার করুন</h2>
+            <p>ইতোমধ্যে একটি অ্যাকাউন্ট আছে? <a href="#" id="showLogin">লগইন করুন</a></p>
+            <div class="form-group">
+                <label for="regUsername">ইউজারনেম</label>
+                <input type="text" id="regUsername" placeholder="একটি ইউজারনেম পছন্দ করুন">
+            </div>
+            <div class="form-group">
+                <label for="regPassword">পাসওয়ার্ড</label>
+                <input type="password" id="regPassword" placeholder="একটি শক্তিশালী পাসওয়ার্ড দিন">
+            </div>
+            <div class="auth-form-buttons">
+                <button id="registerButton">রেজিস্টার</button>
+            </div>
+            <p id="registerMessage" style="color: var(--error-color); margin-top: 15px; font-size: 14px;"></p>
+        </div>
+
+        <!-- Subscription Section -->
+        <div id="subscriptionSection" style="display: none;">
+            <h2>সাবস্ক্রিপশন প্রয়োজন</h2>
+            <p>SAKIB SMS BOMBER ব্যবহার করতে, অনুগ্রহ করে প্রতি মাসে ৳20 দিয়ে সাবস্ক্রাইব করুন।</p>
+            <p>আমাদের বিকাশ মার্চেন্ট নম্বরে ৳20 পাঠান: <strong>01XXXXXXXXX</strong> <br>(এটি শুধুমাত্র একটি উদাহরণ নম্বর)</p>
+            <div class="form-group">
+                <label for="bkashTxnId">বিকাশ ট্রানজেকশন আইডি (TxnID) লিখুন</label>
+                <input type="text" id="bkashTxnId" placeholder="উদাহরণস্বরূপ: ABCDEFG123">
+            </div>
+            <div class="auth-form-buttons">
+                <button id="verifySubscriptionButton">পেমেন্ট যাচাই করুন ও আনলক করুন</button>
+            </div>
+            <p id="subscriptionMessage" style="color: var(--info-color); margin-top: 15px; font-size: 14px;"></p>
+            <p style="margin-top: 20px;"><a href="#" id="logoutButtonSubscription" style="color: var(--secondary-color); text-decoration: none;">লগআউট</a></p>
+        </div>
+
+        <!-- Main Tool Section -->
+        <div id="mainTool" style="display: none;">
+            <p style="text-align: right; font-size: 13px; color: var(--light-text-color);">
+                স্বাগতম, <span id="loggedInUsername">ব্যবহারকারী!</span> | <a href="#" id="logoutButton" style="color: var(--secondary-color); text-decoration: none;">লগআউট</a>
+            </p>
+            <div class="form-group">
+                <label for="phoneNumber">টার্গেট ফোন নম্বর</label>
+                <div class="input-with-label">
+                    <img src="https://flagcdn.com/bd.svg" alt="BD Flag"> <!-- Bangladesh Flag -->
+                    <input type="text" id="phoneNumber" placeholder="যেমন: 01712345678" pattern="[0-9]+" title="শুধুমাত্র সংখ্যা অনুমোদিত">
+                </div>
+            </div>
+
+            <div class="slider-group">
+                <div class="slider-label">
+                    <label for="smsCount">SMS সংখ্যা</label>
+                    <span id="smsCountValue" class="slider-value">1</span>
+                </div>
+                <input type="range" id="smsCount" min="1" max="100" value="1">
+            </div>
+
+            <div class="slider-group">
+                <div class="slider-label">
+                    <label for="delaySeconds">বিলম্ব (সেকেন্ড)</label>
+                    <span id="delaySecondsValue" class="slider-value">1</span>
+                </div>
+                <input type="range" id="delaySeconds" min="1" max="60" value="1">
+            </div>
+
+            <div class="action-buttons">
+                <button id="startButton">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M7 6l10 6-10 6V6z"/>
+                    </svg>
+                    আক্রমণ শুরু করুন
+                </button>
+                <button id="stopButton" disabled>
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M6 6h12v12H6z"/>
+                    </svg>
+                    থামান
+                </button>
+            </div>
+
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="progress-text" id="progressText">0% সম্পন্ন (0/0 পাঠানো হয়েছে)</div>
+
+            <div class="activity-log">
+                <h3>ক্রিয়াকলাপের লগ</h3>
+                <div id="logContent"></div>
+            </div>
+        </div>
+
+        <p class="developer-info">Developed By <a href="#" target="_blank">SAKIB HOSSAIN</a></p>
+    </div>
+
+    <script>
+        // --- DOM Elements ---
+        const phoneNumberInput = document.getElementById('phoneNumber');
+        const smsCountSlider = document.getElementById('smsCount');
+        const smsCountValue = document.getElementById('smsCountValue');
+        const delaySecondsSlider = document.getElementById('delaySeconds');
+        const delaySecondsValue = document.getElementById('delaySecondsValue');
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const logContent = document.getElementById('logContent');
+        const themeButtons = document.querySelectorAll('.theme-settings button');
+
+        // Auth & Subscription elements
+        const authSection = document.getElementById('authSection');
+        const registerSection = document.getElementById('registerSection');
+        const subscriptionSection = document.getElementById('subscriptionSection');
+        const mainTool = document.getElementById('mainTool');
+        const showRegisterLink = document.getElementById('showRegister');
+        const showLoginLink = document.getElementById('showLogin');
+        const loginButton = document.getElementById('loginButton');
+        const registerButton = document.getElementById('registerButton');
+        const verifySubscriptionButton = document.getElementById('verifySubscriptionButton');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const regUsernameInput = document.getElementById('regUsername');
+        const regPasswordInput = document.getElementById('regPassword');
+        const bkashTxnIdInput = document.getElementById('bkashTxnId');
+        const authMessage = document.getElementById('authMessage');
+        const registerMessage = document.getElementById('registerMessage');
+        const subscriptionMessage = document.getElementById('subscriptionMessage');
+        const loggedInUsernameSpan = document.getElementById('loggedInUsername');
+        const logoutButton = document.getElementById('logoutButton');
+        const logoutButtonSubscription = document.getElementById('logoutButtonSubscription');
+
+        // --- Configuration ---
+        const API_BASE_URL = "https://www.gajarbotol.site/apis/boom.php"; // Replace with your actual SMS bomber API endpoint
+        const BACKEND_API_BASE = "http://localhost:3000/api"; // Replace with your actual backend URL
+
+        // --- Global State ---
+        let isAttacking = false;
+        let requestCount = 0;
+        let intervalId = null;
+        let totalSmsToSend = 0;
+        let currentUser = null; // Stores { username, token, hasActiveSubscription }
+
+        // --- Utility Functions ---
+        function showSection(sectionId) {
+            authSection.style.display = 'none';
+            registerSection.style.display = 'none';
+            subscriptionSection.style.display = 'none';
+            mainTool.style.display = 'none';
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        function addLog(message, type = 'info') {
+            const logEntry = document.createElement('div');
+            logEntry.classList.add('log-entry');
+            logEntry.classList.add(`log-${type}`);
+            logEntry.innerHTML = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logContent.prepend(logEntry);
+
+            if (logContent.children.length > 50) {
+                logContent.removeChild(logContent.lastChild);
+            }
+        }
+
+        function updateProgress() {
+            const progress = totalSmsToSend > 0 ? (requestCount / totalSmsToSend) * 100 : 0;
+            progressBar.style.width = `${progress}%`;
+            progressText.textContent = `${progress.toFixed(0)}% সম্পন্ন (${requestCount}/${totalSmsToSend} পাঠানো হয়েছে)`;
+            if (requestCount >= totalSmsToSend && isAttacking) {
+                progressText.textContent += " - সম্পন্ন!";
+                stopAttack();
+            }
+        }
+
+        function resetFormState() {
+            startButton.disabled = false;
+            stopButton.disabled = true;
+            phoneNumberInput.disabled = false;
+            smsCountSlider.disabled = false;
+            delaySecondsSlider.disabled = false;
+            phoneNumberInput.value = '';
+            smsCountSlider.value = 1;
+            delaySecondsSlider.value = 1;
+            smsCountValue.textContent = 1;
+            delaySecondsValue.textContent = 1;
+            progressBar.style.width = '0%';
+            progressText.textContent = '0% সম্পন্ন (0/0 পাঠানো হয়েছে)';
+            logContent.innerHTML = '';
+            addLog("ফোন নম্বর, SMS সংখ্যা এবং বিলম্ব প্রবেশ করিয়ে আক্রমণ শুরু করুন।", 'info');
+        }
+
+        function logout() {
+            localStorage.removeItem('userToken');
+            currentUser = null;
+            showSection('authSection');
+            addLog("লগআউট সফল হয়েছে।", 'info');
+            authMessage.textContent = '';
+            registerMessage.textContent = '';
+            subscriptionMessage.textContent = '';
+        }
+
+        // --- Theme Switching Logic ---
+        themeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                themeButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                document.documentElement.style.setProperty('--primary-color', button.dataset.primary);
+                document.documentElement.style.setProperty('--secondary-color', button.dataset.secondary);
+            });
+        });
+
+        // --- Slider Value Update ---
+        smsCountSlider.addEventListener('input', () => { smsCountValue.textContent = smsCountSlider.value; });
+        delaySecondsSlider.addEventListener('input', () => { delaySecondsValue.textContent = delaySecondsSlider.value; });
+
+        // --- Authentication & Subscription Logic ---
+        async function checkSubscriptionStatus() {
+            const token = localStorage.getItem('userToken');
+            if (!token) {
+                showSection('authSection');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${BACKEND_API_BASE}/auth/status`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+
+                if (response.ok && data.isAuthenticated) {
+                    currentUser = { username: data.username, token: token, hasActiveSubscription: data.hasActiveSubscription };
+                    loggedInUsernameSpan.textContent = currentUser.username;
+                    if (currentUser.hasActiveSubscription) {
+                        showSection('mainTool');
+                        addLog(`স্বাগতম, ${currentUser.username}! আপনার সাবস্ক্রিপশন সক্রিয় আছে।`, 'success');
+                        resetFormState();
+                    } else {
+                        showSection('subscriptionSection');
+                        subscriptionMessage.textContent = data.message || "আপনার সাবস্ক্রিপশনের মেয়াদ শেষ হয়েছে বা সক্রিয় নেই। অনুগ্রহ করে সাবস্ক্রাইব করুন।";
+                        subscriptionMessage.style.color = 'var(--info-color)';
+                    }
+                } else {
+                    logout();
+                }
+            } catch (error) {
+                console.error("Error checking subscription status:", error);
+                logout();
+            }
+        }
+
+        async function registerUser() {
+            const username = regUsernameInput.value.trim();
+            const password = regPasswordInput.value.trim();
+            registerMessage.textContent = '';
+
+            if (!username || !password) {
+                registerMessage.textContent = "ইউজারনেম এবং পাসওয়ার্ড খালি থাকতে পারে না।";
+                registerMessage.style.color = 'var(--error-color)';
+                return;
+            }
+
+            try {
+                const response = await fetch(`${BACKEND_API_BASE}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    registerMessage.textContent = "রেজিস্ট্রেশন সফল হয়েছে! এখন লগইন করুন।";
+                    registerMessage.style.color = 'var(--success-color)';
+                    regUsernameInput.value = '';
+                    regPasswordInput.value = '';
+                    setTimeout(() => showSection('authSection'), 2000);
+                } else {
+                    registerMessage.textContent = data.message || "রেজিস্ট্রেশন ব্যর্থ হয়েছে।";
+                    registerMessage.style.color = 'var(--error-color)';
+                }
+            } catch (error) {
+                console.error("Error during registration:", error);
+                registerMessage.textContent = "নেটওয়ার্ক ত্রুটি: রেজিস্ট্রেশন করা যায়নি।";
+                registerMessage.style.color = 'var(--error-color)';
+            }
+        }
+
+        async function loginUser() {
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+            authMessage.textContent = '';
+
+            if (!username || !password) {
+                authMessage.textContent = "ইউজারনেম এবং পাসওয়ার্ড খালি থাকতে পারে না।";
+                authMessage.style.color = 'var(--error-color)';
+                return;
+            }
+
+            try {
+                const response = await fetch(`${BACKEND_API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    localStorage.setItem('userToken', data.token);
+                    currentUser = { username: data.username, token: data.token, hasActiveSubscription: data.hasActiveSubscription };
+                    checkSubscriptionStatus();
+                    usernameInput.value = '';
+                    passwordInput.value = '';
+                } else {
+                    authMessage.textContent = data.message || "লগইন ব্যর্থ হয়েছে।";
+                    authMessage.style.color = 'var(--error-color)';
+                }
+            } catch (error) {
+                console.error("Error during login:", error);
+                authMessage.textContent = "নেটওয়ার্ক ত্রুটি: লগইন করা যায়নি।";
+                authMessage.style.color = 'var(--error-color)';
+            }
+        }
+
+        async function verifyPayment() {
+            const txnId = bkashTxnIdInput.value.trim();
+            subscriptionMessage.textContent = '';
+
+            if (!txnId) {
+                subscriptionMessage.textContent = "ট্রানজেকশন আইডি খালি থাকতে পারে না।";
+                subscriptionMessage.style.color = 'var(--error-color)';
+                return;
+            }
+
+            try {
+                const response = await fetch(`${BACKEND_API_BASE}/subscription/verify`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentUser.token}`
+                    },
+                    body: JSON.stringify({ txnId })
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    subscriptionMessage.textContent = "পেমেন্ট যাচাই সফল! টুলটি এখন আনলক করা হয়েছে।";
+                    subscriptionMessage.style.color = 'var(--success-color)';
+                    currentUser.hasActiveSubscription = true;
+                    bkashTxnIdInput.value = '';
+                    setTimeout(() => {
+                        showSection('mainTool');
+                        addLog(`স্বাগতম, ${currentUser.username}! আপনার সাবস্ক্রিপশন সক্রিয় হয়েছে।`, 'success');
+                        resetFormState();
+                    }, 2000);
+                } else {
+                    subscriptionMessage.textContent = data.message || "পেমেন্ট যাচাই ব্যর্থ হয়েছে।";
+                    subscriptionMessage.style.color = 'var(--error-color)';
+                }
+            } catch (error) {
+                console.error("Error during payment verification:", error);
+                subscriptionMessage.textContent = "নেটওয়ার্ক ত্রুটি: পেমেন্ট যাচাই করা যায়নি।";
+                subscriptionMessage.style.color = 'var(--error-color)';
+            }
+        }
+
+        // --- SMS Bomber Logic ---
+        async function sendSmsRequest(phoneNumber) {
+            try {
+                const response = await fetch(API_BASE_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentUser.token}`
+                    },
+                    body: JSON.stringify({ phone: phoneNumber })
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    requestCount++;
+                    addLog(`SMS পাঠানো হয়েছে: ${phoneNumber}`, 'success');
+                } else {
+                    addLog(`SMS পাঠাতে ব্যর্থ: ${data.message || 'অজানা ত্রুটি'}`, 'error');
+                }
+                updateProgress();
+            } catch (error) {
+                console.error("Error sending SMS:", error);
+                addLog(`নেটওয়ার্ক ত্রুটি: SMS পাঠানো যায়নি।`, 'error');
+                updateProgress();
+            }
+        }
+
+        function startAttack() {
+            const phoneNumber = phoneNumberInput.value.trim();
+            totalSmsToSend = parseInt(smsCountSlider.value);
+            const delay = parseInt(delaySecondsSlider.value) * 1000;
+
+            if (!phoneNumber || !/^\d+$/.test(phoneNumber)) {
+                addLog("অবৈধ ফোন নম্বর। শুধুমাত্র সংখ্যা অনুমোদিত।", 'error');
+                return;
+            }
+
+            if (!currentUser || !currentUser.hasActiveSubscription) {
+                addLog("সাবস্ক্রিপশন সক্রিয় নেই। অনুগ্রহ করে সাবস্ক্রাইব করুন।", 'error');
+                showSection('subscriptionSection');
+                return;
+            }
+
+            isAttacking = true;
+            requestCount = 0;
+            startButton.disabled = true;
+            stopButton.disabled = false;
+            phoneNumberInput.disabled = true;
+            smsCountSlider.disabled = true;
+            delaySecondsSlider.disabled = true;
+            addLog(`আক্রমণ শুরু হয়েছে: ${phoneNumber} এ ${totalSmsToSend}টি SMS`, 'info');
+
+            intervalId = setInterval(async () => {
+                if (!isAttacking || requestCount >= totalSmsToSend) {
+                    stopAttack();
+                    return;
+                }
+                await sendSmsRequest(phoneNumber);
+            }, delay);
+        }
+
+        function stopAttack() {
+            isAttacking = false;
+            clearInterval(intervalId);
+            intervalId = null;
+            startButton.disabled = false;
+            stopButton.disabled = true;
+            phoneNumberInput.disabled = false;
+            smsCountSlider.disabled = false;
+            delaySecondsSlider.disabled = false;
+            addLog("আক্রমণ থামানো হয়েছে।", 'info');
+            updateProgress();
+        }
+
+        // --- Event Listeners ---
+        showRegisterLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection('registerSection');
+        });
+
+        showLoginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection('authSection');
+        });
+
+        loginButton.addEventListener('click', loginUser);
+        registerButton.addEventListener('click', registerUser);
+        verifySubscriptionButton.addEventListener('click', verifyPayment);
+        logoutButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            logout();
+        });
+        logoutButtonSubscription.addEventListener('click', (e) => {
+            e.preventDefault();
+            logout();
+        });
+
+        startButton.addEventListener('click', startAttack);
+        stopButton.addEventListener('click', stopAttack);
+
+        // --- Initialize ---
+        checkSubscriptionStatus();
+    </script>
+</body>
+</html>
