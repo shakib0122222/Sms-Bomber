@@ -8,8 +8,8 @@
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
         :root {
-            --primary-color: #6a0dad; /* Purple for main elements */
-            --secondary-color: #ff007f; /* Pink for accents/stop button */
+            --primary-color: #6a0dad;
+            --secondary-color: #ff007f;
             --background-color: #f0f2f5;
             --card-background: #ffffff;
             --text-color: #333333;
@@ -223,7 +223,7 @@
             box-shadow: none;
             transform: none;
         }
-        
+
         .activity-log {
             margin-top: 25px;
             text-align: left;
@@ -344,7 +344,6 @@
             background-color: #5a0ca0;
         }
 
-        /* Media queries for larger screens */
         @media (min-width: 600px) {
             body { padding: 30px; align-items: center; }
             .container { max-width: 450px; padding: 30px; margin-top: 20px; margin-bottom: 20px; }
@@ -384,7 +383,7 @@
         </div>
 
         <h1 class="header-title">SAKIB SMS BOMBER</h1>
-        <p class="header-subtitle">সামান্য মজা করুন!</p>
+        <p class="header-subtitle">অভি ভাব রওশন</p>
 
         <!-- Authentication Section -->
         <div id="authSection">
@@ -446,7 +445,7 @@
             <div class="form-group">
                 <label for="phoneNumber">টার্গেট ফোন নম্বর</label>
                 <div class="input-with-label">
-                    <img src="https://flagcdn.com/bd.svg" alt="BD Flag"> <!-- Bangladesh Flag -->
+                    <img src="https://flagcdn.com/bd.svg" alt="BD Flag">
                     <input type="text" id="phoneNumber" placeholder="যেমন: 01712345678" pattern="[0-9]+" title="শুধুমাত্র সংখ্যা অনুমোদিত">
                 </div>
             </div>
@@ -509,8 +508,6 @@
         const progressText = document.getElementById('progressText');
         const logContent = document.getElementById('logContent');
         const themeButtons = document.querySelectorAll('.theme-settings button');
-
-        // Auth & Subscription elements
         const authSection = document.getElementById('authSection');
         const registerSection = document.getElementById('registerSection');
         const subscriptionSection = document.getElementById('subscriptionSection');
@@ -533,8 +530,10 @@
         const logoutButtonSubscription = document.getElementById('logoutButtonSubscription');
 
         // --- Configuration ---
-        const API_BASE_URL = "https://www.gajarbotol.site/apis/boom.php"; // Replace with your actual SMS bomber API endpoint
-        const BACKEND_API_BASE = "http://localhost:3000/api"; // Replace with your actual backend URL
+        // **IMPORTANT**: Replace with your actual backend API URL (e.g., https://your-backend-domain.com/api)
+        const BACKEND_API_BASE = "http://localhost:3000/api"; // Update this to your actual backend URL
+        const API_BASE_URL = "https://www.gajarbotol.site/apis/boom.php"; // Replace with your actual SMS API endpoint
+        const MOCK_MODE = true; // Set to false when backend is set up; true simulates backend responses for testing
 
         // --- Global State ---
         let isAttacking = false;
@@ -554,11 +553,9 @@
 
         function addLog(message, type = 'info') {
             const logEntry = document.createElement('div');
-            logEntry.classList.add('log-entry');
-            logEntry.classList.add(`log-${type}`);
+            logEntry.classList.add('log-entry', `log-${type}`);
             logEntry.innerHTML = `[${new Date().toLocaleTimeString()}] ${message}`;
             logContent.prepend(logEntry);
-
             if (logContent.children.length > 50) {
                 logContent.removeChild(logContent.lastChild);
             }
@@ -623,6 +620,14 @@
                 return;
             }
 
+            if (MOCK_MODE) {
+                currentUser = { username: token.split('-')[2], token, hasActiveSubscription: false };
+                loggedInUsernameSpan.textContent = currentUser.username;
+                showSection('subscriptionSection');
+                addLog(`MOCK MODE: স্বাগতম, ${currentUser.username}! সাবস্ক্রিপশন যাচাই করুন।`, 'info');
+                return;
+            }
+
             try {
                 const response = await fetch(`${BACKEND_API_BASE}/auth/status`, {
                     headers: { 'Authorization': `Bearer ${token}` }
@@ -630,7 +635,7 @@
                 const data = await response.json();
 
                 if (response.ok && data.isAuthenticated) {
-                    currentUser = { username: data.username, token: token, hasActiveSubscription: data.hasActiveSubscription };
+                    currentUser = { username: data.username, token, hasActiveSubscription: data.hasActiveSubscription };
                     loggedInUsernameSpan.textContent = currentUser.username;
                     if (currentUser.hasActiveSubscription) {
                         showSection('mainTool');
@@ -661,6 +666,18 @@
                 return;
             }
 
+            if (MOCK_MODE) {
+                // Simulate successful registration for testing
+                const mockToken = `mock-token-${username}`;
+                localStorage.setItem('userToken', mockToken);
+                registerMessage.textContent = "রেজিস্ট্রেশন সফল হয়েছে! এখন লগইন করুন (MOCK MODE)।";
+                registerMessage.style.color = 'var(--success-color)';
+                regUsernameInput.value = '';
+                regPasswordInput.value = '';
+                setTimeout(() => showSection('authSection'), 2000);
+                return;
+            }
+
             try {
                 const response = await fetch(`${BACKEND_API_BASE}/auth/register`, {
                     method: 'POST',
@@ -679,8 +696,21 @@
                     registerMessage.style.color = 'var(--error-color)';
                 }
             } catch (error) {
-                console.error("Error during registration:", error);
-                registerMessage.textContent = "নেটওয়ার্ক ত্রুটি: রেজিস্ট্রেশন করা যায়নি।";
+                console.error("Registration error details:", {
+                    message: error.message,
+                    name: error.name,
+                    stack: error.stack,
+                    url: `${BACKEND_API_BASE}/auth/register`
+                });
+                let errorMessage = "নেটওয়ার্ক ত্রুটি: রেজিস্ট্রেশন করা যায়নি।";
+                if (error.message.includes('Failed to fetch')) {
+                    errorMessage += " ব্যাকএন্ড সার্ভার চলছে না বা URL সঠিক নয়। অনুগ্রহ করে BACKEND_API_BASE চেক করুন।";
+                } else if (error.message.includes('CORS')) {
+                    errorMessage += " CORS সমস্যা: ব্যাকএন্ডে CORS সেটিংস কনফিগার করুন।";
+                } else {
+                    errorMessage += ` ত্রুটি: ${error.message}`;
+                }
+                registerMessage.textContent = errorMessage;
                 registerMessage.style.color = 'var(--error-color)';
             }
         }
@@ -693,6 +723,17 @@
             if (!username || !password) {
                 authMessage.textContent = "ইউজারনেম এবং পাসওয়ার্ড খালি থাকতে পারে না।";
                 authMessage.style.color = 'var(--error-color)';
+                return;
+            }
+
+            if (MOCK_MODE) {
+                // Simulate successful login for testing
+                const mockToken = `mock-token-${username}`;
+                localStorage.setItem('userToken', mockToken);
+                currentUser = { username, token: mockToken, hasActiveSubscription: false };
+                checkSubscriptionStatus();
+                usernameInput.value = '';
+                passwordInput.value = '';
                 return;
             }
 
@@ -714,8 +755,8 @@
                     authMessage.style.color = 'var(--error-color)';
                 }
             } catch (error) {
-                console.error("Error during login:", error);
-                authMessage.textContent = "নেটওয়ার্ক ত্রুটি: লগইন করা যায়নি।";
+                console.error("Login error details:", error);
+                authMessage.textContent = `নেটওয়ার্ক ত্রুটি: লগইন করা যায়নি। ${error.message}`;
                 authMessage.style.color = 'var(--error-color)';
             }
         }
@@ -727,6 +768,20 @@
             if (!txnId) {
                 subscriptionMessage.textContent = "ট্রানজেকশন আইডি খালি থাকতে পারে না।";
                 subscriptionMessage.style.color = 'var(--error-color)';
+                return;
+            }
+
+            if (MOCK_MODE) {
+                // Simulate successful payment verification for testing
+                subscriptionMessage.textContent = "পেমেন্ট যাচাই সফল! টুলটি এখন আনলক করা হয়েছে (MOCK MODE)।";
+                subscriptionMessage.style.color = 'var(--success-color)';
+                currentUser.hasActiveSubscription = true;
+                bkashTxnIdInput.value = '';
+                setTimeout(() => {
+                    showSection('mainTool');
+                    addLog(`স্বাগতম, ${currentUser.username}! আপনার সাবস্ক্রিপশন সক্রিয় হয়েছে (MOCK MODE)।`, 'success');
+                    resetFormState();
+                }, 2000);
                 return;
             }
 
@@ -756,14 +811,22 @@
                     subscriptionMessage.style.color = 'var(--error-color)';
                 }
             } catch (error) {
-                console.error("Error during payment verification:", error);
-                subscriptionMessage.textContent = "নেটওয়ার্ক ত্রুটি: পেমেন্ট যাচাই করা যায়নি।";
+                console.error("Payment verification error:", error);
+                subscriptionMessage.textContent = `নেটওয়ার্ক ত্রুটি: পেমেন্ট যাচাই করা যায়নি। ${error.message}`;
                 subscriptionMessage.style.color = 'var(--error-color)';
             }
         }
 
         // --- SMS Bomber Logic ---
         async function sendSmsRequest(phoneNumber) {
+            if (MOCK_MODE) {
+                // Simulate SMS sending for testing
+                requestCount++;
+                addLog(`SMS পাঠানো হয়েছে: ${phoneNumber} (MOCK MODE)`, 'success');
+                updateProgress();
+                return;
+            }
+
             try {
                 const response = await fetch(API_BASE_URL, {
                     method: 'POST',
